@@ -1,0 +1,80 @@
+.voto{
+  font-weight: inset;
+  text-align: center;
+  font-size: 25px;
+  line-height: 120%;
+  width: 5%;
+}
+
+.conteudo{
+	text-align: justify;
+	font-size: 15px;
+	padding: 20px;
+	width: 80%;
+	border-top: 0;
+	border-bottom: 0; 
+	border-right: 3px solid white;
+	border-left: 0;
+}
+
+/*.resposta{
+	text-align: justify;
+	font-size: 15px;
+	padding: 20px;
+	width: 80%;
+	border-top: 0;
+	border-bottom: 0; 
+	border-right: 3px solid white;
+	border-left: 0;
+}*/
+
+.criada{
+	width: 400px;
+}
+
+.editada{
+	width: 400px;
+}
+
+.sua_resposta{
+	margin-left: 20%;
+	margin-right: 50%;	
+}
+
+.listas{
+	text-align: center;	
+	tr{
+		border-bottom: 2px solid #000000;
+		padding: 10px;
+	}
+	td{
+		padding-right: 30px;
+	}
+	tr:hover{
+		background: #000;
+		color: #ccc;
+	}
+	.descricao{
+		font-size: 11px;
+		color: #999
+	}
+	.tamanho{
+		width: 300px;
+		text-align: left;
+
+	}
+	h2{
+		text-align: left;	
+	}
+
+	.tamanho_usuario{
+		width: 950px;
+		padding: 10px;
+		text-align: left;
+	}
+
+}
+
+.campo_busca{
+	width: 700px;
+}

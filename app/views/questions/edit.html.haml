@@ -1,0 +1,25 @@
+%h1 Editar pergunta
+
+- unless @question.errors.empty?
+  #validation
+    %h2= 'Os seguintes erros impediram a pergunta de ser editada:'
+    %ul
+      - @question.errors.full_messages.each do |erro|
+        %li#warning-message= erro
+
+= form_tag question_path(@question), method: :put do
+
+  = label :question, :titulo, 'Título'
+  = text_field :question, :titulo
+  %br
+  %br
+  = label :question, :conteudo, 'Conteúdo'
+  = text_area :question, :conteudo, :class => "tinymce"
+  = tinymce
+  %br
+  %br
+  = label :question, :tags_string, 'Tags'
+  = text_field :question, :tags_string
+  %br
+  %br
+  = submit_tag 'Editar'

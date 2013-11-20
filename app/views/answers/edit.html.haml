@@ -1,0 +1,23 @@
+%h2.pergunta#titulo #{@answer.question.titulo}
+
+- unless @answer.errors.empty?
+  #validation
+    %h2= 'Os seguintes erros impediram a resposta de ser criada:'
+    %ul
+      - @answer.errors.full_messages.each do |erro|
+        %li#warning-message= erro
+
+%section.pergunta
+  .pergunta#conteudo!= @answer.question.conteudo  
+
+%hr
+
+%section.resposta
+  %h2 Resposta
+  = form_tag question_answer_path(@answer.question, @answer), method: :put do
+    = text_area :answer, :conteudo, :class => "tinymce"
+    = tinymce
+    %br
+    %br
+    = submit_tag 'Editar'
+

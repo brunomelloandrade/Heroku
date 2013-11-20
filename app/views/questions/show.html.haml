@@ -1,0 +1,81 @@
+
+%h1.pergunta#titulo= @pergunta.titulo
+%hr
+.pergunta
+  %table
+    %tr
+      %td.voto#pergunta_votos
+        = link_to image_tag('maisVoto.png'), vote_up_question_path(@pergunta), id: 'pergunta_upvote', :method => :post
+        %br
+        = @pergunta.plusminus
+        %br
+        = link_to image_tag('menosVoto.png'), vote_down_question_path(@pergunta), id: 'pergunta_downvote', :method => :post
+        %br
+      %td.conteudo#pergunta_conteudo
+        != @pergunta.conteudo
+      %td#pergunta_visualizacoes{:colspan => 3}
+        %h5= "Visualizações: #{@pergunta.hits}"
+    %table
+      %tr
+        %td.criada#pergunta_criada
+          Criada em: #{@pergunta.created_at}
+        %td.editada#pergunta_editada
+          = @pergunta.updated_at ? "Editada em: #{@pergunta.updated_at}" : '  '
+        %td#pergunta_editar
+          = link_to 'Editar', edit_question_path(@pergunta), id: 'editar_pergunta'
+      %tr
+        %td#pergunta_tags
+          = "Tags: #{@pergunta.tags_string}"
+      %tr
+        %td#pergunta_usuario
+          Perguntado por:
+          = link_to "#{@pergunta.user.name}", user_path(@pergunta.user)
+  %hr
+%br
+  
+.resposta
+  %h2#qtde_respostas= @pergunta.answers.count > 0 ? pluralize(@pergunta.answers.count, 'Resposta', 'Respostas') : "Essa mensagem não foi respondida"
+  %hr
+  - @pergunta.answers.each do |answer|
+    .answer[answer]
+      %table
+        %tr
+          %td.voto#resposta_votos
+            = link_to image_tag('maisVoto.png'), vote_up_answer_path(answer), id: "resposta_#{answer.id}_upvote", :method =>:post
+            %br
+            = answer.plusminus
+            %br
+            = link_to image_tag('menosVoto.png'), vote_down_answer_path(answer), id: "resposta_#{answer.id}_downvote", :method => :post
+            %br
+            - if @pergunta.user.eql?(current_user) && !@pergunta.solved?
+              = link_to image_tag('naoAceito.png'), solve_question_path(answer_id: answer), :method => :post, hint: "Melhor Resposta", id: "accept_answer_#{answer.id}"
+            - if answer.accepted?
+              = image_tag 'aceitar.png', id: "accepted-icon-answer_#{answer.id}"
+          %td.conteudo#resposta_conteudo{:border => 1}
+            != answer.conteudo
+        %table
+          %tr
+            %td.criada#resposta_criada
+              Criada em: #{answer.created_at}
+            %td.editada#resposta_editada
+              = answer.updated_at ? "Editada em: #{answer.updated_at}" : ' '
+            %td#resposta_editar
+              = link_to 'Editar', edit_answer_path(answer), id: "editar_resposta_#{answer.id}"
+          %tr
+            %td#resposta_usuario
+              Respondido por:
+              = link_to "#{answer.user.name}", user_path(answer.user)
+
+    %hr
+  %h2#sua_resposta_label= 'Sua Resposta'
+  .sua_resposta
+    - if user_signed_in?
+      = form_tag question_answers_path(@pergunta) do
+        = text_area :answer, :conteudo, :class => "tinymce", id: 'responder_text_field'
+        = tinymce
+        %br
+        = submit_tag 'Responder'
+    - else
+      %strong Você precisa registrar-se ou fazer login para responder uma pergunta.
+
+  
